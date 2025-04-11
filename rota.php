@@ -42,6 +42,22 @@
                 echo $erro_json;
             }
             break;
+        case 'editarContato':
+            $json = file_get_contents("php://input");
+            $contatoDTO = json_decode($json);
+            //criar o objeto Contato
+            $contato = new Contato();
+            $contato->ContatoPDOParaContato($contatoDTO);
+            
+            //chamar o controlador
+            $contatoControlador = new ContatoControlador();
+            try{
+                $contato = $contatoControlador->editarContato($contato);
+                echo json_encode($contato);
+            }catch(Exception $erro){
+                $erro_json = json_encode($erro);
+                echo $erro_json;
+            }
     }
 
 ?>

@@ -35,5 +35,18 @@ class ContatoDAO {
             throw $erro;
         }
     }
+    public function editarContato($contato, $conn) {
+        try {
+            $sql = "UPDATE Contatos SET nome = ?, telefone = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $contato->getNome());
+            $stmt->bindValue(2, $contato->getTelefone());
+            $stmt->bindValue(3, $contato->getId());
+            $stmt->execute();
+            return $contato;
+        } catch(Exception $erro) {
+            throw $erro;
+        }
+    }
 }
 ?>

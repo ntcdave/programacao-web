@@ -27,6 +27,20 @@
                 throw $erro;
             }
         }
+        
+        public function editarContato($contato){
+            try{
+                //abrir conexão com o banco
+                $conexao = new Conexao();
+                $conn = $conexao->getConexao();
+                //chamar o ContatoDAO 
+                $contatoDAO = new ContatoDAO();
+                return $contatoDAO->editarContato($contato,$conn);
+            }catch(Exception $erro){
+                throw $erro;
+            }
+        }
+        
     }
 
 ?>
