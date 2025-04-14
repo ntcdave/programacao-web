@@ -58,6 +58,21 @@
                 $erro_json = json_encode($erro);
                 echo $erro_json;
             }
+            break;
+        case 'excluirContato':
+            $json = file_get_contents("php://input");
+            $contatoDTO = json_decode($json);
+            $id = $contatoDTO->id;
+            //chamar o controlador
+            $contatoControlador = new ContatoControlador();
+            try{
+                $contatoControlador->excluirContato($id);
+                echo json_encode(array("status" => "ok"));
+            }catch(Exception $erro){
+                $erro_json = json_encode($erro);
+                echo $erro_json;
+            }
+            break;
     }
 
 ?>

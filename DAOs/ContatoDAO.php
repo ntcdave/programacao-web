@@ -48,5 +48,16 @@ class ContatoDAO {
             throw $erro;
         }
     }
+    public function excluirContato($id, $conn) {
+        try {
+            $sql = "DELETE FROM Contatos WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+            return true;
+        } catch(Exception $erro) {
+            throw $erro;
+        }
+    }
 }
 ?>

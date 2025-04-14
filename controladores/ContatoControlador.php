@@ -40,7 +40,18 @@
                 throw $erro;
             }
         }
-        
+        public function excluirContato($id){
+            try{
+                //abrir conexão com o banco
+                $conexao = new Conexao();
+                $conn = $conexao->getConexao();
+                //chamar o ContatoDAO 
+                $contatoDAO = new ContatoDAO();
+                return $contatoDAO->excluirContato($id,$conn);
+            }catch(Exception $erro){
+                throw $erro;
+            }
+        }
     }
-
+    
 ?>
