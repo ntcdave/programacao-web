@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.time.OffsetDateTime;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,19 @@ public class TransacaoServices {
     public void editar(Transacao transacao) {
 
     }
+        public DoubleSummaryStatistics calcularEstatisticas() {
+        // Calcula o momento exato de 60 segundos atrás
+        OffsetDateTime sessentaSegundosAtras = OffsetDateTime.now().minusSeconds(60);
+
+        // Busca no banco apenas as transações relevantes (dos últimos 60s)
+        List<Transacao> transacoesRecentes = transacaoRepository.findByDataHoraAfter(sessentaSegundosAtras);
+
+        // Usa a classe DoubleSummaryStatistics para fazer todos os cálculos de uma só vez
+        return transacoesRecentes.stream()
+                .mapToDouble(Transacao::getValor)
+                .summaryStatistics();
+    }
+    public void apagarTodasAsTransacoes() {
+    transacaoRepository.deleteAll();
+}
 }
